@@ -1,6 +1,5 @@
-import asyncio
 import os
-from openai import AsyncOpenAI
+from openai import OpenAI
 from obiguard import OBIGUARD_GATEWAY_URL, Obiguard
 
 obiguard_client = Obiguard(
@@ -8,19 +7,17 @@ obiguard_client = Obiguard(
     provider='openai',
 )
 
-openai_client = AsyncOpenAI(
+openai_client = OpenAI(
     api_key=os.environ.get("OPENAI_API_KEY"),
     base_url=OBIGUARD_GATEWAY_URL,
     default_headers=obiguard_client.copy_headers()
 )
 
+stream = openai_client.responses.create(
+    model="gpt-4o",
+    input="Write a one-sentence bedtime story about a unicorn.",
+    stream=True,
+)
 
-async def main() -> None:
-    response = await openai_client.responses.create(
-        model="gpt-4o",
-        input="Explain disestablishmentarianism to a smart five year old."
-    )
-    print(response.output_text)
-
-
-asyncio.run(main())
+for event in stream:
+    print(event)
