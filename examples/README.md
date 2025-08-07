@@ -4,6 +4,14 @@ The examples in this repository demonstrate how to use the Obiguard Python SDK t
 of your AI applications. Each example is designed to showcase how you may observe and control the behavior of your AI
 application from [Obiguard logs](https://docs.obiguard.ai/observability/logs).
 
+## Requirements
+
+```bash
+pip install obiguard
+pip install openai
+pip install openai-agents
+```
+
 ## Getting your virtual key
 
 Obiguard’s virtual key system lets you securely store your LLM API keys in our vault and manage them easily using a
